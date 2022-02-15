@@ -1,32 +1,42 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
+  <v-app>
+ <div class="text-center">
+    <v-pagination
+      v-bind:value="page"
+      v-model="page"
+      :length="5"
+      :total-visible="7"
+      v-on:input="sendRequest"
+    ></v-pagination>
+    {{page}}<br>
+    {{responseData}}
   </div>
+  </v-app>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import axios from 'axios';
 
-#nav {
-  padding: 30px;
-}
+export default {
+  name: "App",
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+  data: () => ({
+    //
+    page: 1,
+    responseData:''
 
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+  }),
+  methods:{
+    async sendRequest(){
+      console.log(this.page);
+      axios.get("http://localhost:3000/users?page="+this.page+"&limit=2")
+        .then(response => this.responseData = response.data)
+        .catch(error => {
+      this.errorMessage = error.message;
+      console.error("There was an error!", error);
+    });
+
+    },
+  }
+};
+</script>

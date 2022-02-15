@@ -1,4 +1,5 @@
 # page-ui2
+Front-end for Pagination UI  and there is ANOTHER REPOSITORY FOR Pagination backend
 
 ## Project setup
 ```
